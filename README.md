@@ -127,6 +127,7 @@ You can use the installer in a non-interactive mode by using command line argume
     --tor                     : Install TOR and configure bulwarkd to use it
 ```
 
+<<<<<<< HEAD
 If you want to make the installation process fully non-interactive, you need to provide Bulwark with arguments for the mode to use, the external IP, private key, and wether to use fail2ban, UFW and the bootstrap, and then also add the `--no-interaction` parameter. Please not that this will not tell you to activate your masternode from your wallet after the node has finished syncing, so it will not run until you do.
 
 ## Staking Setup
@@ -136,3 +137,18 @@ If you did not opt to set up staking during initial install, run the script belo
 ```
 bash <( curl https://raw.githubusercontent.com/KaneoHunter/shn/master/staking.sh )
 ```
+=======
+Make sure to replace EMAIL and NAME with your mail address and name.
+
+## Starting MNInfo
+
+Enter the following in to your VPS:
+
+`bash mninfo_setup.sh`
+
+This will move scripts to the correct location, install nginx and set up a web server to display non-private information about your website in an easy to access place which you can bookmark and use to check your MN is running smoothly.
+
+If you ever need support on your Masternode, it would help the mods if we could have a link to your mninfo page which is usually:
+
+http://<vps-IP-address>/hourly_status.txt
+>>>>>>> Included mention of mninfo to readme.md
