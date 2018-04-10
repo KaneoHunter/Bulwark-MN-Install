@@ -12,9 +12,7 @@ mv ~/Bulwark-MN-Install/mninfo/mninfoarchive.sh /etc/cron.daily/mninfoarchive.sh
 rm -rf ~/Bulwark-MN-Install/mninfo/
 
 #Assigns permissions to the scripts.
-chmod 755 /etc/cron.daily/mninfoarchive.sh
-chmod 755 /etc/cron.hourly/mninfo.sh
-chmod 755 /etc/cron.hourly/mninfo2.sh
+chmod 755 /etc/cron.daily/mninfoarchive.sh /etc/cron.hourly/mninfo.sh /etc/cron.hourly/mninfo2.sh
 
 #Makes the archive directory and an empty hourly status document.
 mkdir ~/.Bulwark/mninfoarchive
@@ -38,4 +36,4 @@ apt-get update
 apt-get install nginx
 
 echo Starting nginx server..
-/usr/bin/nginx
+systemctl start nginx
