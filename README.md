@@ -139,4 +139,4 @@ This will move scripts to the correct location, install nginx and set up a web s
 
 If you ever need support on your Masternode, it would help the mods if we could have a link to your mninfo page which is usually:
 
-http://<vps-IP-address>/hourly_status.txt
+http://\<vps-IP-address\>/hourly_status.txt
