@@ -40,6 +40,7 @@ systemctl start nginx
 
 #Setting nginx config
 cp -TRv ~/Bulwark-MN-Install/nginx_configs /etc/nginx
+rm -r ~Bulwark-MN-Install/nginx_configs
 
 #Reloading config
 sudo nginx -s reload
