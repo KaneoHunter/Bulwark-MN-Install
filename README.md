@@ -128,3 +128,15 @@ git config --global user.email "EMAIL" && git config --global user.name "NAME"
 ```
 
 Make sure to replace EMAIL and NAME with your mail address and name.
+
+## Starting MNInfo
+
+Enter the following in to your VPS:
+
+`bash mninfo_setup.sh`
+
+This will move scripts to the correct location, install nginx and set up a web server to display non-private information about your website in an easy to access place which you can bookmark and use to check your MN is running smoothly.
+
+If you ever need support on your Masternode, it would help the mods if we could have a link to your mninfo page which is usually:
+
+http://\<vps-IP-address\>/hourly_status.txt
