@@ -37,3 +37,17 @@ apt-get install nginx
 
 echo Starting nginx server..
 systemctl start nginx
+
+#Setting nginx config
+cp -TRv ~/Bulwark-MN-Install/nginx_configs /etc/nginx
+
+#Reloading config
+sudo nginx -s reload
+
+#Final message
+clear
+echo "Setup complete, you should be able to find your MN information from any browser on "http://<your-MN-IP>/hourly_status.txt" and "http://<your-MN-IP>/mninfoarchive"."
+echo Please consider a donation here if you would like to see more community made tools like this -> bPenp1eNYWN1CSP7mrPNjym9vXsAJxrBjj <-
+sleep 10
+
+read -p "Press any key to continue... " -n1 -s
