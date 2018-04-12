@@ -20,15 +20,16 @@ touch ~/.Bulwark/hourly_status.txt
 
 #Adds scripts to crontab and lets user know.
 echo Scheduling scripts..
-(crontab -l 2>/dev/null; echo "*/0 * * * * /etc/cron.hourly/mninfo.sh -with args") | crontab -
-(crontab -l 2>/dev/null; echo "*/55 23 * * * /etc/cron.daily/mninfoarchive.sh -with args") | crontab -
+(crontab -l 2>/dev/null; echo "0 * * * * /etc/cron.hourly/mninfo.sh -with args") | crontab -
+(crontab -l 2>/dev/null; echo "55 23 * * * /etc/cron.daily/mninfoarchive.sh -with args") | crontab -
 
 #Add PGP key for nginx and let user know we are setting up web server.
 cd ~
 echo Setting up web server via nginx.
-sudo apt-key add nginx_signing.key
-deb http://nginx.org/packages/ubuntu/ xenial nginx > /etc/apt/sources.list
-deb-src http://nginx.org/packages/ubuntu/ xenial nginx > /etc/apt/sources.list
+mv ~/Bulwark-MN-Install/nginx_configs/nginx_signing.key.txt /etc/apt/nginx_signing.key
+sudo apt-key add /etc/apt/nginx_signing.key
+deb http://nginx.org/packages/ubuntu/ xenial nginx >> /etc/apt/sources.list
+deb-src http://nginx.org/packages/ubuntu/ xenial nginx >> /etc/apt/sources.list
 
 #Self explanatory.
 echo Installing nginx..
