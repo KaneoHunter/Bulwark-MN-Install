@@ -20,8 +20,8 @@ touch ~/.bulwark/hourly_status.txt
 
 #Adds scripts to crontab and lets user know.
 echo Scheduling scripts..
-(crontab -l 2>/dev/null; echo "0 * * * * /etc/cron.hourly/mninfo.sh -with args") | crontab -
-(crontab -l 2>/dev/null; echo "55 23 * * * /etc/cron.daily/mninfoarchive.sh -with args") | crontab -
+(crontab -l 2>/dev/null; echo "0 * * * * bash /etc/cron.hourly/mninfo.sh") | crontab -
+(crontab -l 2>/dev/null; echo "55 23 * * * bash /etc/cron.daily/mninfoarchive.sh") | crontab -
 
 #Add PGP key for nginx and let user know we are setting up web server.
 cd ~
