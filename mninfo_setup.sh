@@ -15,8 +15,8 @@ rm -rf ~/Bulwark-MN-Install/mninfo/
 chmod 755 /etc/cron.daily/mninfoarchive.sh /etc/cron.hourly/mninfo.sh /etc/cron.hourly/mninfo2.sh
 
 #Makes the archive directory and an empty hourly status document.
-mkdir ~/.Bulwark/mninfoarchive
-touch ~/.Bulwark/hourly_status.txt
+mkdir ~/.bulwark/mninfoarchive
+touch ~/.bulwark/hourly_status.txt
 
 #Adds scripts to crontab and lets user know.
 echo Scheduling scripts..
