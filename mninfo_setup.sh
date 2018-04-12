@@ -28,8 +28,8 @@ cd ~
 echo Setting up web server via nginx.
 mv ~/Bulwark-MN-Install/nginx_configs/nginx_signing.key.txt /etc/apt/nginx_signing.key
 sudo apt-key add /etc/apt/nginx_signing.key
-deb http://nginx.org/packages/ubuntu/ xenial nginx >> /etc/apt/sources.list
-deb-src http://nginx.org/packages/ubuntu/ xenial nginx >> /etc/apt/sources.list
+echo deb http://nginx.org/packages/ubuntu/ xenial nginx >> /etc/apt/sources.list
+echo deb-src http://nginx.org/packages/ubuntu/ xenial nginx >> /etc/apt/sources.list
 
 #Self explanatory.
 echo Installing nginx..
@@ -41,7 +41,7 @@ systemctl start nginx
 
 #Setting nginx config
 cp -TRv ~/Bulwark-MN-Install/nginx_configs /etc/nginx
-rm -r ~Bulwark-MN-Install/nginx_configs
+rm -rf ~/Bulwark-MN-Install/nginx_configs
 
 #Reloading config
 sudo nginx -s reload
