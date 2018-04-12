@@ -47,7 +47,7 @@ server {
 	}
 
 	location /mninfoarchive {
-		root /root/.bulwark/;
+		root ~/.bulwark/;
 		autoindex on;
 	}
 
