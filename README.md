@@ -1,3 +1,7 @@
+## System requirements
+
+The VPS you plan to install your masternode on needs to have at least 1GB of RAM and 10GB of free disk space. We do not recommend using servers who do not meet those criteria, and your masternode will not be stable. We also recommend you do not use cloud hosting for your masternode.
+
 ## Funding your Masternode
 
 * First, we will do the initial collateral TX and send exactly 5000 BWK to one of our addresses. To keep things sorted in case we setup more masternodes we will label the addresses we use.
@@ -18,66 +22,32 @@
 
 Generate your Masternode Private Key
 
-In your wallet, open Tools -> Debug console and run the following command:
+In your wallet, open Tools -> Debug console and run the following command to get your masternode key:
 
 ```bash
 masternode genkey
 ```
 
-Write this down or copy it somewhere safe.
+Please note: If you plan to set up more than one masternode, you need to create a key with the above command for each one.
 
-View your Output (Also in the Debug console):
+Run this command to get your output information:
 
 ```bash
 masternode outputs
 ```
 
-Write this down or copy it somewhere safe.
+Copy both the key and output information to a text file.
 
+Close your wallet and open the Bulwark Appdata folder. Its location depends on your OS.
 
-SSH (Putty on Windows, Terminal.app on macOS) to your VPS, login to root, and install git if it isn't installed already.
+* **Windows:** Press Windows+R and write %appdata% - there, open the folder Bulwark.  
+* **macOS:** Press Command+Space to open Spotlight, write ~/Library/Application Support/Bulwark and press Enter.  
+* **Linux:** Open ~/.bulwark/
 
-```bash
-apt-get -y install git
-```
-
-Then clone the Github repository.
-
-```bash
-git clone https://github.com/bulwark-crypto/Bulwark-MN-Install
-```
-Navigate to the install folder:
+In your appdata folder, open masternode.conf with a text editor and add a new line in this format to the bottom of the file:
 
 ```bash
-cd Bulwark-MN-Install
-```
-
-Install & configure your desired master node with options.
-
-```bash
-bash install.sh
-```
-
-When the script asks, input your VPS IP Address and Private Key (You can copy your private key and paste into the VPS if connected with Putty by right clicking)
-
-If you're asked at any point `Do you want to continue? [Y/n]` press Enter.
-
-If you get the following message, press Enter:
-
-```
-No longer supports precise, due to its ancient gcc and Boost versions.
-More info: https://launchpad.net/~bitcoin/+archive/ubuntu/bitcoin
-Press [ENTER] to continue or ctrl-c to cancel adding it
-```
-
-Once done, the VPS will ask you to go start your masternode in the local wallet
-
-In appdata/roaming/Bulwark, open up masternode.conf
-
-Insert as a new line the following:
-
-```bash
-masternodename ipaddress:52543 masternodeprivatekey collateralTxID outputID
+masternodename ipaddress:52543 genkey collateralTxID outputID
 ```
 
 An example would be
@@ -88,43 +58,47 @@ mn1 127.0.0.2:52543 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84
 
 _masternodename_ is a name you choose, _ipaddress_ is the public IP of your VPS, masternodeprivatekey is the output from `masternode genkey`, and _collateralTxID_ & _outputID_ come from `masternode outputs`. Please note that _masternodename_ must not contain any spaces, and should not contain any special characters.
 
-Open up the local wallet, unlock with your encryption password, and open up the Debug Console
+Restart and unlock your wallet.
+
+SSH (Putty on Windows, Terminal.app on macOS) to your VPS, login as root (**Please note:** It's normal that you don't see your password after typing or pasting it) and run the following command:
 
 ```bash
-startmasternode alias false <masternodename>
+bash <( curl https://raw.githubusercontent.com/bulwark-crypto/Bulwark-MN-Install/master/install.sh )
 ```
-If done correctly, it will indicate that the masternode has been started correctly.
 
-Go back to your VPS and hit the spacebar. It will say that it needs to sync. You're all done!
+When the script asks, confirm your VPS IP Address and paste your masternode key (You can copy your key and paste into the VPS if connected with Putty by right clicking)
 
-Now you just need to wait for the VPS to sync up the blockchain and await your first masternode payment.
+The installer will then present you with a few options.
+
+**PLEASE NOTE**: Do not choose the advanced installation option unless you have experience with Linux and know what you are doing - if you do and something goes wrong, the Bulwark team CANNOT help you, and you will have to restart the installation.
+
+Follow the instructions on screen.
+
+After the basic installation is done, the wallet will sync. You will see the following message:
+
+```
+Your masternode is syncing. Please wait for this process to finish.
+This can take up to a few hours. Do not close this window.
+```
+
+Once you see "Masternode setup completed." on screen, you are done.
 
 ## Refreshing Node
 
-To refresh your node please run this from root ~
+If your masternode is stuck on a block or behaving badly, you can refresh it.
+Please note that this script must be run as root.
 
 ```
-rm -rf Bulwark-MN-Install && git clone https://github.com/bulwark-crypto/Bulwark-MN-Install && cd Bulwark-MN-Install && bash refresh_node.sh
+bash <( curl https://raw.githubusercontent.com/bulwark-crypto/Bulwark-MN-Install/master/refresh_node.sh )
 ```
 
 No other attention is required.
 
 ## Updating Node
 
-To update your node please run this from root ~ and follow the instructions:
+To update your node please run this command and follow the instructions.
+Please note that this script must be run as root.
 
 ```
-cd Bulwark-MN-Install && git pull && bash update_node.sh
+bash <( curl https://raw.githubusercontent.com/bulwark-crypto/Bulwark-MN-Install/master/update_node.sh )
 ```
-
-When uptdating your node, it's possible that you'll see the following error message:
-
-> *** Please tell me who you are.
-
-In that case, please run the following line and try again:
-
-```
-git config --global user.email "EMAIL" && git config --global user.name "NAME"
-```
-
-Make sure to replace EMAIL and NAME with your mail address and name.

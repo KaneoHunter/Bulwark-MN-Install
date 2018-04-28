@@ -1,28 +1,57 @@
 #!/bin/bash
+
+clear
+echo "This script will refresh your masternode."
+read -p "Press Ctrl-C to abort or any other key to continue. " -n1 -s
 clear
 
-bulwark-cli stop
+if [ "$(id -u)" != "0" ]; then
+  echo "This script must be run as root."
+  exit 1
+fi
 
-sleep 10
+USER=`ps u $(pgrep bulwarkd) | grep bulwarkd | cut -d " " -f 1`
+USERHOME=`eval echo "~$USER"`
 
-rm -rf ~/.bulwark/blocks
-rm -rf ~/.bulwark/database
-rm -rf ~/.bulwark/chainstate
-rm -rf ~/.bulwark/peers.dat
+if [ -e /etc/systemd/system/bulwarkd.service ]; then
+  systemctl stop bulwarkd
+else
+  su -c "bulwark-cli stop" $BWKUSER
+fi
 
-cp ~/.bulwark/bulwark.conf ~/.bulwark/bulwark.conf.backup
-sed -i '/^addnode/d' ~/.bulwark/bulwark.conf
-cat <<EOL >>  ~/.bulwark/bulwark.conf
-addnode=bwk1.masterhash.us:52543
-addnode=bwk2.masterhash.us:52543
-addnode=bwk3.masterhash.us:52543
-addnode=bwk4.masterhash.us:52543
-addnode=bwk5.masterhash.us:52543
-addnode=bwk6.masterhash.us:52543
-addnode=bwk7.masterhash.us:52543
-addnode=bwk8.masterhash.us:52543
-addnode=bwk9.masterhash.us:52543
-addnode=bwk10.masterhash.us:52543
-EOL
+echo "Refreshing node, please wait."
 
-bulwarkd -daemon
+sleep 5
+
+rm -rf $USERHOME/.bulwark/blocks
+rm -rf $USERHOME/.bulwark/database
+rm -rf $USERHOME/.bulwark/chainstate
+rm -rf $USERHOME/.bulwark/peers.dat
+
+cp $USERHOME/.bulwark/bulwark.conf $USERHOME/.bulwark/bulwark.conf.backup
+sed -i '/^addnode/d' $USERHOME/.bulwark/bulwark.conf
+
+if [ -e /etc/systemd/system/bulwarkd.service ]; then
+  sudo systemctl start bulwarkd
+else
+  su -c "bulwarkd -daemon" $USER
+fi
+
+echo "Your masternode is syncing. Please wait for this process to finish."
+echo "This can take up to a few hours. Do not close this window." && echo ""
+
+until su -c "bulwark-cli startmasternode local false 2>/dev/null | grep 'successfully started' > /dev/null" $USER; do
+  for (( i=0; i<${#CHARS}; i++ )); do
+    sleep 2
+    echo -en "${CHARS:$i:1}" "\r"
+  done
+done
+
+sleep 1
+su -c "/usr/local/bin/bulwark-cli startmasternode local false" $USER
+sleep 1
+clear
+su -c "/usr/local/bin/bulwark-cli masternode status" $USER
+sleep 5
+
+echo "" && echo "Masternode refresh completed." && echo ""
