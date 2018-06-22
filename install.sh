@@ -99,11 +99,11 @@ clear
 
 # Set these to change the version of Bulwark to install
 
-TARBALLURL="https://github.com/bulwark-crypto/Bulwark/releases/download/1.2.4/bulwark-1.2.4.0-linux64.tar.gz"
-TARBALLNAME="bulwark-1.2.4.0-linux64.tar.gz"
-BWKVERSION="1.2.4.0"
-BOOTSTRAPURL="https://github.com/bulwark-crypto/Bulwark/releases/download/1.2.4/bootstrap.dat.zip"
-BOOTSTRAPARCHIVE="bootstrap.dat.zip"
+TARBALLURL="https://github.com/bulwark-crypto/Bulwark/releases/download/1.3.0/bulwark-1.3.0.0-linux64.tar.gz"
+TARBALLNAME="bulwark-1.3.0.0-linux64.tar.gz"
+BWKVERSION="1.3.0.0"
+BOOTSTRAPURL="https://github.com/bulwark-crypto/Bulwark/releases/download/1.3.0/bootstrap.dat.xz"
+BOOTSTRAPARCHIVE="bootstrap.dat.xz"
 
 #!/bin/bash
 
@@ -222,7 +222,7 @@ echo "Installing dependencies..."
 apt-get -qq update
 apt-get -qq upgrade
 apt-get -qq autoremove
-apt-get -qq install wget htop unzip
+apt-get -qq install wget htop xz-utils
 apt-get -qq install build-essential && apt-get -qq install libtool autotools-dev autoconf automake && apt-get -qq install libssl-dev && apt-get -qq install libboost-all-dev && apt-get -qq install software-properties-common && add-apt-repository -y ppa:bitcoin/bitcoin && apt update && apt-get -qq install libdb4.8-dev && apt-get -qq install libdb4.8++-dev && apt-get -qq install libminiupnpc-dev && apt-get -qq install libqt4-dev libprotobuf-dev protobuf-compiler && apt-get -qq install libqrencode-dev && apt-get -qq install git && apt-get -qq install pkg-config && apt-get -qq install libzmq3-dev
 apt-get -qq install aptitude
 
@@ -259,7 +259,7 @@ mkdir $USERHOME/.bulwark
 # Install bootstrap file
 if [[ ("$BOOTSTRAP" == "y" || "$BOOTSTRAP" == "Y" || "$BOOTSTRAP" == "") ]]; then
   echo "Installing bootstrap file..."
-  wget $BOOTSTRAPURL && unzip -o $BOOTSTRAPARCHIVE -d $USERHOME/.bulwark/ && rm $BOOTSTRAPARCHIVE
+  wget $BOOTSTRAPURL && xz -cd $BOOTSTRAPARCHIVE > $USERHOME/.bulwark/bootstrap.dat && rm $BOOTSTRAPARCHIVE
 fi
 
 # Create bulwark.conf
