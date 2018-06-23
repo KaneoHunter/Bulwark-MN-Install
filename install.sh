@@ -304,6 +304,9 @@ fi
 # Create bulwark.conf
 touch $USERHOME/.bulwark/bulwark.conf
 
+# DEBUG 
+cat /var/lib/tor/hidden_service/hostname
+
 # Set TORHOSTNAME if it exists.
 if [[ -f /var/lib/tor/hidden_service/hostname ]]; then
   TORHOSTNAME=`cat /var/lib/tor/hidden_service/hostname`
