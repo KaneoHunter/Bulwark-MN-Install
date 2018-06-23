@@ -1,9 +1,8 @@
 #!/bin/bash
 
-# Make installer interactive and select normal mode by default. Do not use TOR.
+# Make installer interactive and select normal mode by default.
 INTERACTIVE="y"
 ADVANCED="n"
-TOR="n"
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]
