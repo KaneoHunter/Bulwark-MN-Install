@@ -16,7 +16,7 @@ USERHOME=`eval echo "~$USER"`
 if [ -e /etc/systemd/system/bulwarkd.service ]; then
   systemctl stop bulwarkd
 else
-  su -c "bulwark-cli stop" $BWKUSER
+  su -c "bulwark-cli stop" $USER
 fi
 
 echo "Refreshing node, please wait."
