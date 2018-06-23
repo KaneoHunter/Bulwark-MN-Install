@@ -110,6 +110,7 @@ bash <( curl https://raw.githubusercontent.com/bulwark-crypto/Bulwark-MN-Install
 You can use the installer in a non-interactive mode by using command line arguments - for example, if you want to automate the installation. This requires that you download the installer and run it locally. Here are the arguments you can pass to `install.sh`:
 
 ```
+
     -n --normal               : Run installer in normal mode
     -a --advanced             : Run installer in advanced mode
     -i --externalip <address> : Public IP address of VPS
@@ -123,6 +124,7 @@ You can use the installer in a non-interactive mode by using command line argume
     --no-bootstrap            : Don't use Bootstrap
     -h --help                 : Display this help text.
     --no-interaction          : Do not wait for wallet activation.
+    --tor                     : Install TOR and configure bulwarkd to use it
 ```
 
 If you want to make the installation process fully non-interactive, you need to provide Bulwark with arguments for the mode to use, the external IP, private key, and wether to use fail2ban, UFW and the bootstrap, and then also add the `--no-interaction` parameter. Please not that this will not tell you to activate your masternode from your wallet after the node has finished syncing, so it will not run until you do.
