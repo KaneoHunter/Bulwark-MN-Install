@@ -278,9 +278,9 @@ LongLivedPorts 80,52543
 EOL
   /etc/init.d/tor stop
   sudo rm -R /var/lib/tor/hidden_service 2>/dev/null
-  echo "Starting TOR, please wait..."
   /etc/init.d/tor start
-  sleep 5
+  echo "Starting TOR, please wait..."
+  sleep 5 # Give tor enough time to connect before we continue
 fi
 
 # Install Bulwark daemon
@@ -303,9 +303,6 @@ fi
 
 # Create bulwark.conf
 touch $USERHOME/.bulwark/bulwark.conf
-
-# DEBUG 
-cat /var/lib/tor/hidden_service/hostname
 
 # Set TORHOSTNAME if it exists.
 if [[ -f /var/lib/tor/hidden_service/hostname ]]; then
