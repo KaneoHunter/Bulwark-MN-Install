@@ -255,6 +255,7 @@ fi
 
 # Install TOR
 if [[ ("$TOR" == "y" || "$TOR" == "Y") ]]; then
+  echo "Installing TOR..."
   apt-get -qq install tor
 cat >> /etc/tor/torrc << EOL
 
@@ -277,8 +278,9 @@ LongLivedPorts 80,52543
 EOL
   /etc/init.d/tor stop
   sudo rm -R /var/lib/tor/hidden_service 2>/dev/null
+  echo "Starting TOR, please wait..."
   /etc/init.d/tor start
-  TORHOSTNAME=`cat /var/lib/tor/hidden_service/hostname`
+  sleep 5
 fi
 
 # Install Bulwark daemon
@@ -302,8 +304,14 @@ fi
 # Create bulwark.conf
 touch $USERHOME/.bulwark/bulwark.conf
 
+# Set TORHOSTNAME if it exists.
+if [[ -f /var/lib/tor/hidden_service/hostname ]]; then
+  TORHOSTNAME=`cat /var/lib/tor/hidden_service/hostname`
+fi
+
 # We need a different conf for TOR support
 if [[ ("$TOR" == "y" || "$TOR" == "Y") ]]; then
+
 cat > $USERHOME/.bulwark/bulwark.conf << EOL
 rpcuser=${RPCUSER}
 rpcpassword=${RPCPASSWORD}
