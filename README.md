@@ -128,3 +128,11 @@ You can use the installer in a non-interactive mode by using command line argume
 ```
 
 If you want to make the installation process fully non-interactive, you need to provide Bulwark with arguments for the mode to use, the external IP, private key, and wether to use fail2ban, UFW and the bootstrap, and then also add the `--no-interaction` parameter. Please not that this will not tell you to activate your masternode from your wallet after the node has finished syncing, so it will not run until you do.
+
+## Staking Setup
+
+If you did not opt to set up staking during initial install, run the script below to do so.
+
+```
+bash <( curl https://raw.githubusercontent.com/KaneoHunter/shn/master/staking.sh )
+```
