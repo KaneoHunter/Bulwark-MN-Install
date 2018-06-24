@@ -1,5 +1,8 @@
 #!/bin/bash
 
+BOOTSTRAPURL="https://github.com/bulwark-crypto/Bulwark/releases/download/1.3.0/bootstrap.dat.xz"
+BOOTSTRAPARCHIVE="bootstrap.dat.xz"
+
 clear
 echo "This script will refresh your masternode."
 read -p "Press Ctrl-C to abort or any other key to continue. " -n1 -s
@@ -31,14 +34,23 @@ rm -rf $USERHOME/.bulwark/peers.dat
 cp $USERHOME/.bulwark/bulwark.conf $USERHOME/.bulwark/bulwark.conf.backup
 sed -i '/^addnode/d' $USERHOME/.bulwark/bulwark.conf
 
+echo "Installing bootstrap file..."
+wget $BOOTSTRAPURL && xz -cd $BOOTSTRAPARCHIVE > $USERHOME/.bulwark/bootstrap.dat && rm $BOOTSTRAPARCHIVE
+
 if [ -e /etc/systemd/system/bulwarkd.service ]; then
   sudo systemctl start bulwarkd
 else
   su -c "bulwarkd -daemon" $USER
 fi
 
+clear
+
 echo "Your masternode is syncing. Please wait for this process to finish."
 echo "This can take up to a few hours. Do not close this window." && echo ""
+
+until [ -n "$(bulwark-cli getconnectioncount 2>/dev/null)"  ]; do
+  sleep 1
+done
 
 until su -c "bulwark-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\" : true' > /dev/null" $USER; do
   echo -ne "Current block: "`su -c "bulwark-cli getinfo" $USER | grep blocks | awk '{print $3}' | cut -d ',' -f 1`'\r'
