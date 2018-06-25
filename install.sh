@@ -431,7 +431,7 @@ sleep 5
 
 read -e -p "Would you now like to set up staking from this VPS? [N/y] : " STAKING
 if [[ ("$STAKING" == "y" || "$STAKING" == "Y") ]]; then
-  #Ensure bulwarkd is active
+#Ensure bulwarkd is active
   if systemctl is-active --quiet bulwarkd; then
   	systemctl start bulwarkd
 fi
