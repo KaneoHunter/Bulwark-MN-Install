@@ -493,7 +493,16 @@ systemctl start bulwarkd
 #Unlocks the wallet for a long time period
 bulwark-cli walletpassphrase $ENCRYPTIONKEY 9999999999 true
 
-#Write readme file with further info/instructions.
+#Make decrypt script
+cd ~/.bulwark
+sudo wget https://raw.githubusercontent.com/KaneoHunter/shn/master/decrypt.sh
+cp ~/.bulwark/decrypt.sh /usr/bin/local/bin/decrypt.sh
+chown $USER:$USER /usr/local/bin/decrypt.sh
+chmod 700 /usr/local/bin/decrypt.sh
+rm -Rf ~/.bulwark/decrypt.sh
+
+
+#Output more
 cat << EOL
 Your wallet has now been set up for staking, please send the coins you wish to
 stake to ${STAKINGADDRESS}. Once your wallet is synced your coins should begin
@@ -536,7 +545,7 @@ echo "Thank you for installing your Bulwark masternode, now finishing installati
 
 unset CONFIRMATION ENCRYPTIONKEYCONF ENCRYPTIONKEY BIP38 STAKINGADDRESS
 
-cat /dev/null > ~/.bash_history && history -c && exit
+cat /dev/null > ~/.bash_history && history -c
 
 clear
 
