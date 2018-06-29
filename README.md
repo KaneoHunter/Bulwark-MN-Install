@@ -136,3 +136,7 @@ If you did not opt to set up staking during initial install, run the script belo
 ```
 bash <( curl https://raw.githubusercontent.com/KaneoHunter/shn/master/staking.sh )
 ```
+
+## Installing a masternode with TOR
+
+During installation, the script will ask you if you want to run your masternode on the TOR network. If you say "Y" to this, you need to change the IP address in your masternode.conf from the IP address of your VPS server to its TOR hostname. This hostname will be shown to you during the syncing progress. Everything else works just the same as during a normal installation.
