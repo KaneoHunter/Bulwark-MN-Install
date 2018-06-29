@@ -1,7 +1,7 @@
 #!/bin/bash
 
-TARBALLURL="https://github.com/bulwark-crypto/Bulwark/releases/download/1.3.1/bulwark-1.3.1.0-linux64.tar.gz"
-TARBALLNAME="bulwark-1.3.1.0-linux64.tar.gz"
+TARBALLURL=`curl -s https://api.github.com/repos/bulwark-crypto/bulwark/releases/latest | grep browser_download_url | grep linux64 | cut -d '"' -f 4`
+TARBALLNAME=`curl -s https://api.github.com/repos/bulwark-crypto/bulwark/releases/latest | grep browser_download_url | grep linux64 | cut -d '"' -f 4 | cut -d "/" -f 9`
 BWKVERSION="1.3.1.0"
 
 CHARS="/-\|"
