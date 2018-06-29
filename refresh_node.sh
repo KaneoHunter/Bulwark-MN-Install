@@ -1,10 +1,6 @@
 #!/bin/bash
 
-<<<<<<< HEAD
-BOOTSTRAPURL="https://github.com/bulwark-crypto/Bulwark/releases/download/1.3.1/bootstrap.dat.xz"
-=======
-BOOTSTRAPURL="https://github.com/bulwark-crypto/Bulwark/releases/download/1.3.0/bootstrap.dat.xz"
->>>>>>> Completed and ready to test! (#3)
+BOOTSTRAPURL=`curl -s https://api.github.com/repos/bulwark-crypto/bulwark/releases/latest | grep bootstrap.dat.xz | grep browser_download_url | cut -d '"' -f 4`
 BOOTSTRAPARCHIVE="bootstrap.dat.xz"
 
 clear
